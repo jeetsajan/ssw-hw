@@ -140,4 +140,4 @@ def main(directory):
     college.print_tables()
 
 
-main("/Users/jeetsajan/PycharmProjects/SSW810 Assignments/HW10_Jeet_Sajan")
+# main("/Users/jeetsajan/PycharmProjects/SSW810 Assignments/HW10_Jeet_Sajan")
