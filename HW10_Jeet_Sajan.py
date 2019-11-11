@@ -174,6 +174,13 @@ class Repository:
                     flag = True
             if not flag:
                 raise ValueError(i[3] + " is an invalid Instructor CWID in grades.txt!")
+        for i in self._students:
+            flag = False
+            for j in self._majors:
+                if i[2] in j:
+                    flag = True
+            if not flag:
+                raise ValueError("In students.txt, " + i[1] + " has an invalid major " + i[2] + "!")
 
     def analyze_data(self):
         """ This function gets the data for the table from the three files and populates the table """
