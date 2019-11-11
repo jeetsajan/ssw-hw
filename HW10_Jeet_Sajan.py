@@ -159,15 +159,15 @@ class Repository:
             self.student_list.append([key, value[0], value[1], value[2], value[3], value[4]])
 
     def invalid_check(self):
-        """ This function checks if there are no invalid student or instructor in grades.txt """
-        for i in self._grades:
+        """ This function checks if there are no invalid or unconventional input cases """
+        for i in self._grades:  # Student in grades.txt doesn't exist in students.txt
             flag = False
             for j in self._students:
                 if i[0] in j:
                     flag = True
             if not flag:
                 raise ValueError(i[0] + " is an invalid Student CWID in grades.txt!")
-        for i in self._grades:
+        for i in self._grades:  # Instructor in grades.txt doesn't exist in instructors.txt
             flag = False
             for j in self._instructors:
                 if i[3] in j:
