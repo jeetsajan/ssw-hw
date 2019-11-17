@@ -36,6 +36,7 @@ class Repository:
         self._instructors = list()  # List containing input fields from instructors.txt
         self._students = list()  # List containing input fields from students.txt
         self._grades = list()  # List containing input fields from grades.txt
+        self.data_retrieved = list()
         try:
             for major, typeof, course in hw8.file_reading_gen(self._majors_file, 3, "\t", True):
                 self._majors.append([major, typeof, course])
@@ -156,6 +157,7 @@ class Repository:
         db = sqlite3.connect(db_path)
         for row in db.execute(query):
             self.instructor_db_table.add_row(row)
+            self.data_retrieved.append(row)
 
     def invalid_check(self):
         """ This function checks if there are no invalid student or instructor in grades.txt """
