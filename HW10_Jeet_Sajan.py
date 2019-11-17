@@ -77,29 +77,23 @@ class Repository:
 
     def get_instructor_data(self):
         """ This function gets the instructor data and stores it into an instance of prettytable """
-        _instructor = dict()  # Dictionary containing final fields for the instructors prettytable
-        _instructor = defaultdict(lambda: "")
-        _aux = dict()
-
-        for i in self._grades:  # Getting values for instructor prettytable (Course name and Number of students)
-            _instructor[i[1]] = list()
-            _instructor[i[1]].append(0)
-            for j in self._grades:
-                if i[1] == j[1]:
-                    _instructor[i[1]][0] += 1
-        for i in self._instructors:  # Getting the rest of the values for instructor prettytable (CWID, Name and Dept)
-            for j in self._grades:
-                if i[0] == j[3] and i[1] not in _instructor[j[1]]:
-                    _instructor[j[1]].insert(0, i[1])
-                    _instructor[j[1]].insert(0, i[0])
-                    _instructor[j[1]].insert(2, i[2])
-        for key, value in sorted(_instructor.items(),
-                                 key=lambda e: e[1][1]):  # Sorting the dictionary according to name
-            _aux[key] = value  # Storing the sorted dictionary into a temporary dictionary
-        _instructor = _aux
-        for key, value in _instructor.items():  # Populating the instructor prettytable
-            self.instructor_table.add_row([value[0], value[1], value[2], key, value[3]])
-            self.instructor_list.append([value[0], value[1], value[2], key, value[3]])
+        _instructor = []
+        for i in self._grades:
+            if [i[1], i[3], '', '', 0] not in _instructor:
+                _instructor.append([i[1], i[3], '', '', 0])
+        for i in self._grades:
+            for j in _instructor:
+                if i[1] == j[0]:
+                    j[4] += 1
+        for i in self._instructors:
+            for j in _instructor:
+                if i[0] == j[1]:
+                    j[2] = i[1]
+                    j[3] = i[2]
+        _instructor = sorted(_instructor, key=lambda l: l[2], reverse=True)
+        for i in _instructor:
+            self.instructor_table.add_row([i[1], i[2], i[3], i[0], i[4]])
+            self.instructor_list.append([i[1], i[2], i[3], i[0], i[4]])
 
     def get_student_data(self):
         """ This function gets the student data and stores it into an instance of prettytable """
@@ -212,4 +206,4 @@ def main(directory):
     college.print_tables()
 
 
-# main("/Users/jeetsajan/PycharmProjects/SSW810 Assignments/HW10_Jeet_Sajan")
+main("/Users/jeetsajan/PycharmProjects/SSW810 Assignments/test")
